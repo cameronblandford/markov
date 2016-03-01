@@ -1,5 +1,6 @@
 from collections import defaultdict
 import random
+import re
 
 
 class MarkovGenerator:
@@ -7,9 +8,10 @@ class MarkovGenerator:
 	text_in = ""
 
 	letters = True
-	case_sensitive = False
+	case_sensitive = True
+	full_sentences = True
 
-	RESOLUTION = 7
+	RESOLUTION = 8
 	OUTPUT_SIZE = 1000
 
 
@@ -98,7 +100,19 @@ class MarkovGenerator:
 			output_words.append(seed_words[i])
 
 		# prettifying output
+		out = ''
 		if self.letters:
-			return ''.join(output_words)
+			out = ''.join(output_words)
 		else:
-			return ' '.join(output_words)
+			out = ' '.join(output_words)
+		if self.full_sentences:
+			return self.trim_output(out)
+		else:
+			return out
+
+	def trim_output(self, output):
+		text = output
+		pattern = '[A-Z].*[\.\!\?]'
+		result = re.findall(pattern, output)[0]
+		return result
+

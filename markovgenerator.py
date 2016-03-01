@@ -1,7 +1,7 @@
 from collections import defaultdict
 import random
 import re
-
+import sys
 
 class MarkovGenerator:
 	corpus = defaultdict(list)
@@ -9,14 +9,14 @@ class MarkovGenerator:
 
 	letters = True
 	case_sensitive = True
-	full_sentences = True
+	full_sentences = False
+	preserve_newlines = True
 
-	RESOLUTION = 8
-	OUTPUT_SIZE = 1000
+	RESOLUTION = 5
+	OUTPUT_SIZE = 500
 
 
 # for weird elven language shit: letters, not case sensitive, res = 2
-# 
 
 	def __init__(self):
 		pass
@@ -29,7 +29,10 @@ class MarkovGenerator:
 		for line in file:
 			lines.append(line)
 
-		lines = [x.strip() for x in lines]
+		if self.preserve_newlines:
+			lines = [x.strip()+'\n' for x in lines]
+		else:
+			lines = [x.strip() for x in lines]
 		lines = [x for x in lines if x != ""]
 		lines = " ".join(lines)
 		return lines
@@ -112,7 +115,10 @@ class MarkovGenerator:
 
 	def trim_output(self, output):
 		text = output
-		pattern = '[A-Z].*[\.\!\?]'
-		result = re.findall(pattern, output)[0]
-		return result
+		pattern = '[A-Z][\S\s]*[\.\!\?]'
+		result = re.findall(pattern, output)
+		if len(result) == 0:
+			print "\nERROR, TRIMMING FAILED\n"
+			sys.exit(0)
+		return result[0]
 

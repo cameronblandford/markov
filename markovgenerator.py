@@ -8,15 +8,13 @@ class MarkovGenerator:
     corpus = defaultdict(list)
     text_in = ""
 
-    letters = False
-    case_sensitive = False
-    full_sentences = True
-    preserve_newlines = True
-
-    RESOLUTION = 2
-    OUTPUT_SIZE = 500
-
     def __init__(self):
+        self.letters = False
+        self.case_sensitive = False
+        self.full_sentences = True
+        self.preserve_newlines = True
+        self.RESOLUTION = 2
+        self.OUTPUT_SIZE = 500
         pass
 
     def input(self, filename):
@@ -134,3 +132,35 @@ def trim_output(output):
         print("\nERROR, TRIMMING FAILED\n")
         sys.exit(0)
     return result[0]
+
+
+def generate_text(  
+                    string="",
+                    file="",
+                    words=False, 
+                    letters=False, 
+                    case_sensitive=False, 
+                    full_sentences=True, 
+                    preserve_newlines=False,
+                    resolution=2,
+                    output_size=500,
+                    ):
+
+    m = MarkovGenerator()
+
+    if words:
+        m.letters = False
+
+    if letters:
+        m.letters = True
+
+    m.case_sensitive = case_sensitive
+    m.full_sentences = full_sentences
+    m.RESOLUTION = resolution
+    m.OUTPUT_SIZE = output_size
+
+    if len(file) > 0:
+        m.generate_corpus(m.input(file))
+    elif len(string) > 0:
+        m.generate_corpus(string)
+    return m.output()

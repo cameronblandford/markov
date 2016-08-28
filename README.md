@@ -12,13 +12,17 @@ print(m.generate_text(file="example.txt")) # generates text from a file
 print(m.generate_text(string="some sample text")) # generates text from a string
 
 m.generate_text(file="example.txt",resolution=2,output_size=100) # outputs 100 words, 
-# and each word is chosen by looking up the two previous word (2-token lookback).
+# and each word is chosen by looking up the two previous words (2-token lookback).
 
 ```
 
 
 ### Features
 
+* Choose how much lookback you want with the `resolution` (int) variable.
+* Choose whether you want to use words or letters as your tokens with `words=True` or `letters=True`
+* Choose whether you want to preserve newlines from the source text in your ouput with `preserve_newlines` (boolean).
+* Choose whether you want to consider capitalization when adding items to the corpus with `case_sensitive`
 
 ### What Is It?
 

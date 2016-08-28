@@ -8,7 +8,9 @@ Clone this repo into the directory in which you'll be using it. Then in your fil
 import markovgenerator as m
 
 print(m.generate_text(file="example.txt")) # generates text from a file
+
 print(m.generate_text(string="some sample text")) # generates text from a string
+
 m.generate_text(file="example.txt",resolution=2,output_size=100) # outputs 100 words, 
 # and each word is chosen by looking up the two previous word (2-token lookback).
 

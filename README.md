@@ -8,21 +8,22 @@ Clone this repo into the directory in which you'll be using it. Then in your fil
 import markovgenerator as m
 
 print(m.generate_text(file="example.txt")) # generates text from a file
-
-print(m.generate_text(string="some sample text")) # generates text from a string
-
-m.generate_text(file="example.txt",resolution=2,output_size=100) # outputs 100 words, 
-# and each word is chosen by looking up the two previous words (2-token lookback).
-
 ```
+`print(m.generate_text(string="some sample text"))` generates text from a string
+
+`m.generate_text(file="example.txt",resolution=2,output_size=100)` outputs 100 words, and each word is chosen by looking up the two previous words (2-token lookback).
 
 
-### Features
-
-* Choose how much lookback you want with the `resolution` (int) variable.
-* Choose whether you want to use words or letters as your tokens with `words=True` or `letters=True`
-* Choose whether you want to preserve newlines from the source text in your ouput with `preserve_newlines` (boolean).
-* Choose whether you want to consider capitalization when adding items to the corpus with `case_sensitive`
+| Settings          	| Effect                                                                                         	| Default 	|
+|-------------------	|------------------------------------------------------------------------------------------------	|---------	|
+| preserve_newlines 	| if `False`, removes all linebreaks from output.                                                	| True    	|
+| letters           	| if `True`, uses letters as tokens instead of words.                                            	| False   	|
+| full_sentences    	| if `True`, trims off any incomplete sentences from the end of the output.                      	| True    	|
+| case_sensitive    	| if `True`, "foobar" and "Foobar" are counted as separate words when generating keys.           	| False   	|
+| resolution        	| How many consecutive tokens constitute the key for each next token                             	| 2       	|
+| output_size       	| How many tokens (words or letters) are included in the output, before any trimming.            	| 500     	|
+| string            	| A string of text to use as input. String or File MUST be specified for output to be generated. 	| ""      	|
+| file              	| Stringified relative filepath for the text to use as input.                                    	| ""      	|
 
 ### What Is It?
 
@@ -59,7 +60,4 @@ Or any combination thereof. Note that because nothing comes after "snow," "snow"
 
 
 ### Future Plans
-1. ~~add ability to clip sentence fragments from beginning and end of output~~ DONE
-2. ~~add ability to retain newline characters~~
-3. add different, less random ways to pick which edge to take from a state with multiple leaving edges
-4. clean up this documentation
+1. add different, less random ways to pick which edge to take from a state with multiple leaving edges

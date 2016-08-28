@@ -89,11 +89,13 @@ class MarkovGenerator:
             output_words.append(seed_words[0])
 
             next_word = ""
-            if self.case_sensitive:
-                next_word = random.choice(self.corpus[' '.join(seed_words)])
-            else:
+            if self.case_sensitive and len(self.corpus[' '.join(seed_words)]) > 0:
+                    next_word = random.choice(self.corpus[' '.join(seed_words)])
+            elif len(self.corpus[' '.join(seed_words).lower()]) > 0:
                 next_word = random.choice(self.corpus[' '.join(seed_words).
                                           lower()])
+            else:
+                break
 
             for j in range(0, self.RESOLUTION - 1):
                 seed_words[j] = seed_words[j + 1]
@@ -129,7 +131,7 @@ def trim_output(output):
     pattern = '[A-Z][\S\s]*[\.\!\?]'
     result = re.findall(pattern, output)
     if len(result) == 0:
-        print("\nERROR, TRIMMING FAILED\n")
+        print("\nERROR, TRIMMING FAILED. With short inputs, try setting full_sentences=False.\n")
         sys.exit(0)
     return result[0]
 

@@ -1,5 +1,30 @@
 # Markov Text Generator #
 
+### How Do I Use It?
+
+Clone this repo into the directory in which you'll be using it. Then in your file, you can use the following:
+
+```
+import markovgenerator as m
+
+print(m.generate_text(file="example.txt")) # generates text from a file
+```
+`print(m.generate_text(string="some sample text"))` generates text from a string
+
+`m.generate_text(file="example.txt",resolution=2,output_size=100)` outputs 100 words, and each word is chosen by looking up the two previous words (2-token lookback).
+
+
+| Settings          	| Effect                                                                                         	| Default 	|
+|-------------------	|------------------------------------------------------------------------------------------------	|---------	|
+| preserve_newlines 	| if `False`, removes all linebreaks from output.                                                	| True    	|
+| letters           	| if `True`, uses letters as tokens instead of words.                                            	| False   	|
+| full_sentences    	| if `True`, trims off any incomplete sentences from the end of the output.                      	| True    	|
+| case_sensitive    	| if `True`, "foobar" and "Foobar" are counted as separate words when generating keys.           	| False   	|
+| resolution        	| How many consecutive tokens constitute the key for each next token                             	| 2       	|
+| output_size       	| How many tokens (words or letters) are included in the output, before any trimming.            	| 500     	|
+| string            	| A string of text to use as input. String or File MUST be specified for output to be generated. 	| ""      	|
+| file              	| Stringified relative filepath for the text to use as input.                                    	| ""      	|
+
 ### What Is It?
 
 This Python script utilizes a Markov Chain (a non-deterministic finite state machine that doesn't track history) to generate text based on source text. Below is an example where the script uses one previous word to identify the next. My implementation lets the user decide how much history should be retained (how many consecutive tokens make up the key for each state), and whether words or letters should be used as the tokens (`"her" -> "fleece"` vs `"her fleece" -> "as"` vs `"he" -> "r"`).
@@ -33,12 +58,6 @@ Here, the state machine is confronted with two possible actions. Follow the edge
 ```
 Or any combination thereof. Note that because nothing comes after "snow," "snow" is a terminal state that stops the machine and returns the accumulated output.
 
-### How Do I Use It?
-
-Copy markovgenerator.py into your working directory. As per test.py, import the class, and use at will. Possible options are specified in test.py. Note that input(filename) creates a single string usable by the generateCorpus(input) method. It is not a part of the generateCorpus(input) method in case the user wishes to web-scrape for their text instead, and/or use a persistent data storage option such as a database to hold / aggregate automatically-gathered source text.
 
 ### Future Plans
-1. ~~add ability to clip sentence fragments from beginning and end of output~~ DONE
-2. ~~add ability to retain newline characters~~
-3. add different, less random ways to pick which edge to take from a state with multiple leaving edges
-4. clean up this documentation
+1. add different, less random ways to pick which edge to take from a state with multiple leaving edges
